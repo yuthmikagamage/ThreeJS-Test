@@ -1,4 +1,5 @@
 import * as THREE from "three";
+import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 
 const scene = new THREE.Scene();
 const camera = new THREE.PerspectiveCamera(
@@ -18,9 +19,12 @@ scene.add(cube);
 
 camera.position.z = 5;
 
-function animate(time) {
-  cube.rotation.x = time / 2000;
-  cube.rotation.y = time / 1000;
+const controls = new OrbitControls(camera, renderer.domElement);
+controls.enableDamping = true;
+
+function animate() {
+  controls.update();
   renderer.render(scene, camera);
 }
+
 renderer.setAnimationLoop(animate);
