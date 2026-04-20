@@ -30,10 +30,24 @@ const colors = [
 ];
 
 let index = 0;
-
 const clock = new THREE.Clock();
 let accumulator = 0;
 const interval = 1000;
+
+const raycaster = new THREE.Raycaster();
+const mouse = new THREE.Vector2();
+
+window.addEventListener("click", (event) => {
+  mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+  mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+
+  raycaster.setFromCamera(mouse, camera);
+  const intersects = raycaster.intersectObject(cube);
+
+  if (intersects.length > 0) {
+    console.log("clicked");
+  }
+});
 
 window.addEventListener("resize", () => {
   const width = window.innerWidth;
