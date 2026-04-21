@@ -30,9 +30,6 @@ const colors = [
 ];
 
 let index = 0;
-const clock = new THREE.Clock();
-let accumulator = 0;
-const interval = 1000;
 
 const raycaster = new THREE.Raycaster();
 const mouse = new THREE.Vector2();
@@ -45,7 +42,8 @@ window.addEventListener("click", (event) => {
   const intersects = raycaster.intersectObject(cube);
 
   if (intersects.length > 0) {
-    console.log("clicked");
+    cube.material.color.copy(colors[index]);
+    index = (index + 1) % colors.length;
   }
 });
 
@@ -61,15 +59,6 @@ window.addEventListener("resize", () => {
 });
 
 function animate() {
-  const delta = clock.getDelta() * 1000;
-  accumulator += delta;
-
-  if (accumulator >= interval) {
-    cube.material.color.copy(colors[index]);
-    index = (index + 1) % colors.length;
-    accumulator = 0;
-  }
-
   controls.update();
   renderer.render(scene, camera);
 }
